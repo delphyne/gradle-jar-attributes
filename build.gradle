@@ -11,7 +11,12 @@ repositories {
 	jcenter()
 }
 
-test.useTestNG()
+test {
+	useTestNG()
+	testLogging {
+		exceptionFormat = 'full'
+	}
+}
 
 // TODO : dog-food this.
 def travisAttrs = [
