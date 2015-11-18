@@ -1,0 +1,61 @@
+apply plugin: 'java-gradle-plugin'
+apply plugin: GroovyPlugin
+apply plugin: MavenPlugin
+
+group = 'com.github.delphyne'
+version = System.getenv('TRAVIS_TAG') ?: System.getenv('TRAVIS_BUILD_NUMBER') ?
+		"${System.getenv('TRAVIS_BUILD_NUMBER')}-travis" :
+		version
+
+repositories {
+	jcenter()
+}
+
+test.useTestNG()
+
+// TODO : dog-food this.
+def travisAttrs = [
+		'repo-slug': 'TRAVIS_REPO_SLUG',
+		'branch': 'TRAVIS_BRANCH',
+		'commit': 'TRAVIS_COMMIT',
+		'tag': 'TRAVIS_TAG',
+		'build-number': 'TRAVIS_BUILD_NUMBER',
+]
+tasks.withType(Jar).each {
+	it.manifest {
+		attributes (['Implementation-Title': name,
+					 'Implementation-URL': 'https://github.com/delphyne/groovy-test',
+					 'Implementation-Vendor': 'https://github.com/delphyne',
+					 'Implementation-Vendor-id': group,
+					 'Implementation-Version': version,
+					 'built-by': System.getProperty('user.name'),
+					 'jdk-vendor': Runtime.class.package.implementationVendor,
+					 'jdk-version': System.getProperty('java.version'),
+					 'gradle-version': gradle.gradleVersion,
+					 'groovy-version': GroovySystem.version])
+
+		travisAttrs.each { attr, envVar ->
+			def value = System.getenv(envVar)
+			if (value != null) { // truthy isn't good enough
+				attributes((attr): value)
+			}
+		}
+	}
+}
+
+uploadArchives {
+	repositories {
+		mavenDeployer {
+			repository(url: new File(buildDir, 'delphyne.github.io/.m2').toURL())
+			pom.project {
+				licenses {
+					license {
+						name 'The Apache Software License, Version 2.0'
+						url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+					}
+				}
+			}
+		}
+	}
+}
+
