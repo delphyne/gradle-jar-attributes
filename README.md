@@ -69,6 +69,7 @@ jarAttributes {
 ### Default Attributes
 
 Out of the box, this plugin provides the 3 most common Jar Manifest Attributes:
+
 1. `Implementation-Title` is set to project.name
 2. `Implementation-Vendor` is set to project.group
 3. `Implementation-Version` is set to project.version
