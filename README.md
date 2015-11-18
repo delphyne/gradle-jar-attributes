@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/delphyne/gradle-jar-attributes.svg?branch=master)](https://travis-ci.org/delphyne/gradle-jar-attributes)
+
 # gradle-jar-attributes
 _A Gradle Plugin to manage your Jar's Manifests_
 
