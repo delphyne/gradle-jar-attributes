@@ -1,6 +1,18 @@
 apply plugin: 'java-gradle-plugin'
 apply plugin: GroovyPlugin
 apply plugin: MavenPlugin
+apply plugin: 'com.github.delphyne.jar-attributes'
+
+buildscript {
+	repositories {
+		maven {
+			url 'https://delphyne.github.io/.m2'
+		}
+	}
+	dependencies {
+		classpath 'com.github.delphyne:jar-attributes-gradle-plugin:0.0.1'
+	}
+}
 
 group = 'com.github.delphyne'
 version = System.getenv('TRAVIS_TAG') ?: System.getenv('TRAVIS_BUILD_NUMBER') ?
@@ -18,34 +30,17 @@ test {
 	}
 }
 
-// TODO : dog-food this.
-def travisAttrs = [
-		'repo-slug': 'TRAVIS_REPO_SLUG',
-		'branch': 'TRAVIS_BRANCH',
-		'commit': 'TRAVIS_COMMIT',
-		'tag': 'TRAVIS_TAG',
-		'build-number': 'TRAVIS_BUILD_NUMBER',
-]
-tasks.withType(Jar).each {
-	it.manifest {
-		attributes (['Implementation-Title': name,
-					 'Implementation-URL': 'https://github.com/delphyne/groovy-test',
-					 'Implementation-Vendor': 'https://github.com/delphyne',
-					 'Implementation-Vendor-id': group,
-					 'Implementation-Version': version,
-					 'built-by': System.getProperty('user.name'),
-					 'jdk-vendor': Runtime.class.package.implementationVendor,
-					 'jdk-version': System.getProperty('java.version'),
-					 'gradle-version': gradle.gradleVersion,
-					 'groovy-version': GroovySystem.version])
-
-		travisAttrs.each { attr, envVar ->
-			def value = System.getenv(envVar)
-			if (value != null) { // truthy isn't good enough
-				attributes((attr): value)
-			}
-		}
-	}
+jarAttributes {
+	'jdk-vendor' Runtime.class.package.implementationVendor
+	'jdk-version' sysprop('java.version')
+	'gradle-version' { project.getGradle().gradleVersion }
+	'groovy-version' GroovySystem.version
+	'repo-slug' env('TRAVIS_REPO_SLUG')
+	'built-by' sysprop('user.name')
+	branch env('TRAVIS_BRANCH')
+	commit env('TRAVIS_COMMIT')
+	tag env('TRAVIS_TAG')
+	'build-number' env('TRAVIS_BUILD_NUMBER')
 }
 
 uploadArchives {
