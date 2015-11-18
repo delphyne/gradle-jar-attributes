@@ -35,7 +35,7 @@ public class JarAttributesPluginIntegrationTest {
 				'built-by' sysprop('user.name')
 				'jdk-vendor' Runtime.class.package.implementationVendor
 				'jdk-version' sysprop('java.version')
-				'target-compatibility' prop('targetCompatibility')
+				'libs-dir' prop('libsDirName')
 				randomEnv env('${envKey}')
 			}
 			"""
@@ -55,7 +55,7 @@ public class JarAttributesPluginIntegrationTest {
 		assert attrs.getValue('built-by') == System.properties['user.name']
 		assert attrs.getValue('jdk-vendor') == Runtime.class.package.implementationVendor
 		assert attrs.getValue('jdk-version') == System.properties['java.version']
-		assert attrs.getValue('target-compatibility') == '1.8'
+		assert attrs.getValue('libs-dir') == 'libs'
 		assert attrs.getValue('randomEnv') == envVal
 		assert attrs.getValue('Implementation-Title') == name
 		assert attrs.getValue('Implementation-Vendor') == group
