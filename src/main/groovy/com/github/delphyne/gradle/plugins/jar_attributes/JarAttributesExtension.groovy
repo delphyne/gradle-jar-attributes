@@ -134,7 +134,7 @@ class JarAttributesExtension {
 	@SuppressWarnings("GrMethodMayBeStatic")
 	public void update(Map<String, String> r, String k, def v) {
 		if (v instanceof Closure) {
-			v = v.call()
+			v = v(project)
 		}
 		if (v == null) {
 			project.logger.debug("Omitting '{}' from manifest due to null value.")
@@ -155,7 +155,7 @@ class JarAttributesExtension {
 			 * Scan through defaults, adding the default or any override in place
 			 */
 			defaultAttributes.each { k, v ->
-				update(r, k, attributes.containsKey(k) ? attributes[k] : v(project))
+				update(r, k, attributes.containsKey(k) ? attributes[k] : v)
 			}
 		}
 		/*
