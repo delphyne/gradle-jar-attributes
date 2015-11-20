@@ -64,7 +64,7 @@ popd
 
 pushd "${DOC_REPO_DIRECTORY}"
 #regenerate the java/groovy docs index
-./reindex.sh -d .docs -l 2
+./reindex.sh -d .docs -l 3
 git add .docs
 popd
 
