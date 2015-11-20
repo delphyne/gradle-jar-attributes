@@ -10,7 +10,7 @@ buildscript {
 		}
 	}
 	dependencies {
-		classpath 'com.github.delphyne:jar-attributes-gradle-plugin:0.0.1'
+		classpath 'com.github.delphyne:jar-attributes-gradle-plugin:0.0.2'
 	}
 }
 
@@ -18,10 +18,6 @@ group = 'com.github.delphyne'
 version = System.getenv('TRAVIS_TAG') ?: System.getenv('TRAVIS_BUILD_NUMBER') ?
 		"${System.getenv('TRAVIS_BUILD_NUMBER')}-travis" :
 		version
-
-repositories {
-	jcenter()
-}
 
 test {
 	useTestNG()
@@ -43,10 +39,11 @@ jarAttributes {
 	'build-number' env('TRAVIS_BUILD_NUMBER')
 }
 
+def m2repoPath = (System.getenv('M2_REPO_DIRECTORY') ?: buildDir.path) + "/.m2"
 uploadArchives {
 	repositories {
 		mavenDeployer {
-			repository(url: new File(buildDir, 'delphyne.github.io/.m2').toURL())
+			repository(url: new File(m2repoPath).toURL())
 			pom.project {
 				licenses {
 					license {

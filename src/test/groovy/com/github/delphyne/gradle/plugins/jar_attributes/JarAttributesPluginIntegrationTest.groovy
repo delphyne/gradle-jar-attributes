@@ -51,7 +51,7 @@ public class JarAttributesPluginIntegrationTest {
 
 		File jar = new File(projectDir, 'build/libs').listFiles().find { File f -> f.name.contains('.jar') }
 		Manifest manifest = new JarFile(jar).manifest
-		def attrs = manifest.attr
+		def attrs = manifest.mainAttributes
 		assert attrs.getValue('built-by') == System.properties['user.name']
 		assert attrs.getValue('jdk-vendor') == Runtime.class.package.implementationVendor
 		assert attrs.getValue('jdk-version') == System.properties['java.version']
