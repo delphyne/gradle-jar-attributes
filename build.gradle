@@ -1,8 +1,8 @@
 apply plugin: 'java-gradle-plugin'
 apply plugin: GroovyPlugin
 apply plugin: MavenPlugin
-apply plugin: 'com.github.delphyne.jar-attributes'
 apply plugin: 'com.github.delphyne.default-jars'
+apply plugin: 'com.github.delphyne.jar-attributes'
 
 buildscript {
 	repositories {

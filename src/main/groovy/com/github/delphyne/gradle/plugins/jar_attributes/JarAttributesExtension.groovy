@@ -5,14 +5,14 @@ import org.gradle.api.Project
 /**
  * Configuration for the {@link JarAttributesPlugin}.  Configuration is done via builder syntax:
  *
- * {code}
- * jarAttributes &#123;
+ * <pre><code>
+ * jarAttributes {
  *   applyDefaults false
  *   foo "bar"
  *   baz true
- *   someCalculatedValue = &#123; Math.random() &#125;
- * &#125;
- * {code}
+ *   someCalculatedValue = { Math.random() };
+ * }
+ * </code></pre>
  *
  * Will create a manifest with the following entries:
  * foo: bar
