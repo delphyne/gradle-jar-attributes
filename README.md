@@ -3,6 +3,8 @@
 # gradle-jar-attributes
 _A Gradle Plugin to manage your Jar's Manifests_
 
+[Groovydoc](https://delphyne.github.io/.docs/delphyne/gradle-jar-attributes/1.0.0/groovydoc/)
+
 The jar-attributes plugin simplifies the process of adding info to your jar's manifest.  It does this by automatically
 omitting (and logging) attributes with null values.  This is particularly useful when you have a build that gets some
 attributes for released artifacts from your CI server, yet you want to be able to build the jar locally for testing.
