@@ -2,6 +2,7 @@ apply plugin: 'java-gradle-plugin'
 apply plugin: GroovyPlugin
 apply plugin: MavenPlugin
 apply plugin: 'com.github.delphyne.jar-attributes'
+apply plugin: 'com.github.delphyne.default-jars'
 
 buildscript {
 	repositories {
@@ -11,6 +12,7 @@ buildscript {
 	}
 	dependencies {
 		classpath 'com.github.delphyne:jar-attributes-gradle-plugin:0.0.2'
+		classpath 'com.github.delphyne:default-jars-gradle-plugin:0.0.1'
 	}
 }
 
